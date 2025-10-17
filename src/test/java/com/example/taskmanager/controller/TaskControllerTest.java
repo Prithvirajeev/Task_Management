@@ -17,7 +17,9 @@ import java.util.Collections;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
+@SuppressWarnings("unused")
 @WebMvcTest(TaskController.class)
 class TaskControllerTest {
 
@@ -41,19 +43,23 @@ class TaskControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("Test"));
     }
-
     @Test
     void testCreateTask() throws Exception {
         Task task = new Task();
-        task.setName("CreateTest");
-        task.setDueDate(LocalDate.now().plusDays(1));
+        task.setId(1);
+        task.setName("Test Task");
+        task.setDescription("Sample Description");
+        task.setStatus(Task.Status.PENDING);
 
-        Mockito.when(service.createTask(any(Task.class))).thenReturn(task);
+        // Mock service layer
+        when(service.createTask(any(Task.class))).thenReturn(task);
 
         mockMvc.perform(post("/api/v1/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(task)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("CreateTest"));
+                .andExpect(jsonPath("$.title").value("Test Task"))
+                .andExpect(jsonPath("$.description").value("Sample Description"))
+                .andExpect(jsonPath("$.status").value("PENDING"));
     }
 }

@@ -29,7 +29,7 @@ public class SwaggerConfig {
                 "API documentation for Task Management Spring Boot application",
                 "1.0",
                 "Terms of service URL",
-                new Contact("Prudhvi Rajeev", "https://github.com/Prithvirajeev", "your-email@example.com"),
+                new Contact("Prudhvi Rajeev", "https://github.com/Prithvirajeev", "kumarprithvi2002@gmail.com"),
                 "License of API",
                 "License URL",
                 Collections.emptyList()
